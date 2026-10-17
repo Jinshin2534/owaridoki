@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="会の終わりが近づくと蛍の光が小さく流れ始め、だんだん大きくなって、アナウンスで締めるタイマー。" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>おわりどき — 蛍の光で会の終わりを知らせる</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230b1020'/><circle cx='32' cy='34' r='9' fill='%23e8f27a'/><circle cx='32' cy='34' r='18' fill='%23e8f27a' opacity='.18'/></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="fireflies" aria-hidden="true"></div>
+
+    <main>
+      <header>
+        <h1>おわりどき</h1>
+        <p class="lead">終わりが近づくと蛍の光が小さく流れ始め、だんだん大きくなって、アナウンスで締めます。</p>
+      </header>
+
+      <!-- 設定 -->
+      <section id="setup" class="card">
+        <div class="field">
+          <span class="label">いつ終わる?</span>
+          <div class="seg" role="tablist">
+            <button type="button" class="seg-btn" data-mode="minutes" role="tab">あと何分で</button>
+            <button type="button" class="seg-btn" data-mode="clock" role="tab">時刻で</button>
+          </div>
+          <div class="when" data-for="minutes">
+            <input id="minutes" type="number" inputmode="numeric" min="1" max="600" step="1" aria-label="あと何分" />
+            <span>分後に終わる</span>
+          </div>
+          <div class="when" data-for="clock">
+            <input id="clock" type="time" aria-label="終わる時刻" />
+            <span>に終わる</span>
+          </div>
+          <div class="quick" aria-label="よく使う長さ">
+            <button type="button" data-min="15">15分</button>
+            <button type="button" data-min="30">30分</button>
+            <button type="button" data-min="45">45分</button>
+            <button type="button" data-min="60">1時間</button>
+            <button type="button" data-min="90">1時間半</button>
+          </div>
+        </div>
+
+        <label class="field">
+          <span class="label">蛍の光を流し始める</span>
+          <select id="lead">
+            <option value="1">終わる1分前から</option>
+            <option value="2">終わる2分前から</option>
+            <option value="3">終わる3分前から</option>
+            <option value="5">終わる5分前から</option>
+            <option value="10">終わる10分前から</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="label">いちばん大きいときの音量</span>
+          <input id="maxvol" type="range" min="0.2" max="1" step="0.05" />
+        </label>
+
+        <div class="field">
+          <label class="check"><input id="announce" type="checkbox" /> アナウンスを入れる(流れ始め・1分前・終わり)</label>
+          <div id="announce-opts">
+            <label class="sub">
+              <span>声</span>
+              <select id="voice"></select>
+            </label>
+            <label class="sub col">
+              <span>最後のひとこと</span>
+              <textarea id="farewell" rows="3"></textarea>
+            </label>
+            <p id="no-voice" class="note" hidden>このブラウザでは日本語の声が見つかりません。チャイムだけ鳴ります。</p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="start" type="button" class="primary">開始</button>
+          <button id="preview" type="button" class="ghost">試しに聞く(15秒)</button>
+        </div>
+        <p class="note">開始したら、この画面を開いたまま置いておいてください。音はこの端末から出ます。</p>
+      </section>
+
+      <!-- 動作中 -->
+      <section id="run" class="run" hidden>
+        <p id="phase" class="phase"></p>
+        <p id="remain" class="remain" aria-live="off">00:00</p>
+        <p id="endat" class="endat"></p>
+        <div class="meter" aria-hidden="true"><div id="meter-fill"></div></div>
+        <p id="volnote" class="volnote"></p>
+        <div class="actions">
+          <button type="button" class="ghost" data-extend="1">+1分</button>
+          <button type="button" class="ghost" data-extend="5">+5分</button>
+          <button id="stop" type="button" class="danger">止める</button>
+        </div>
+      </section>
+
+      <!-- おしまい -->
+      <section id="done" class="run" hidden>
+        <p class="phase">おつかれさまでした</p>
+        <p class="remain small">おしまい</p>
+        <div class="actions">
+          <button id="again" type="button" class="primary">もう一度</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      曲はスコットランド民謡「Auld Lang Syne」(蛍の光)の旋律を、ブラウザの中で合成して鳴らしています。
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

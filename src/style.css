@@ -1,0 +1,227 @@
+:root {
+  --bg: #0b1020;
+  --bg2: #141b33;
+  --ink: #eef0f7;
+  --mute: #9aa3c0;
+  --line: #2a3354;
+  --glow: #e8f27a;
+  --glow-ink: #1d2200;
+  --danger: #ff8a7a;
+  --p: 0; /* 終わりにどれだけ近いか 0〜1 */
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  min-height: 100dvh;
+  background: radial-gradient(120% 80% at 50% 110%, #1b2547 0%, var(--bg) 60%) fixed, var(--bg);
+  color: var(--ink);
+  font-family: 'Zen Maru Gothic', system-ui, -apple-system, 'Hiragino Sans', sans-serif;
+  font-weight: 500;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
+}
+
+main {
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+header { text-align: center; padding: 40px 0 18px; }
+
+h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-shadow: 0 0 24px rgba(232, 242, 122, 0.35);
+}
+
+.lead { margin: 8px 0 0; color: var(--mute); font-size: 0.95rem; }
+
+.card {
+  background: rgba(20, 27, 51, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(6px);
+}
+
+.field { display: block; margin-bottom: 22px; }
+.label { display: block; font-weight: 700; margin-bottom: 8px; }
+
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  margin-bottom: 12px;
+}
+
+.seg-btn {
+  border: 0;
+  background: transparent;
+  color: var(--mute);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.seg-btn[aria-selected='true'] { background: var(--glow); color: var(--glow-ink); font-weight: 700; }
+
+.when { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+.when[hidden] { display: none; }
+
+input[type='number'], input[type='time'], select, textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+input[type='number'] { width: 6.5em; font-size: 1.4rem; text-align: right; }
+input[type='time'] { font-size: 1.4rem; color-scheme: dark; }
+select { width: 100%; }
+textarea { width: 100%; resize: vertical; }
+
+input[type='range'] { width: 100%; accent-color: var(--glow); }
+
+.quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.quick button {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  cursor: pointer;
+}
+.quick button:hover { border-color: var(--glow); }
+
+.check { display: flex; gap: 8px; align-items: center; font-weight: 700; cursor: pointer; }
+.check input { width: 18px; height: 18px; accent-color: var(--glow); }
+
+#announce-opts { margin-top: 12px; padding-left: 26px; }
+#announce-opts[hidden] { display: none; }
+.sub { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.sub > span { flex: none; color: var(--mute); font-size: 0.9rem; }
+.sub.col { flex-direction: column; align-items: stretch; gap: 4px; }
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+button.primary, button.ghost, button.danger {
+  font: inherit;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 12px 26px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+button.primary {
+  background: var(--glow);
+  color: var(--glow-ink);
+  font-size: 1.1rem;
+  min-width: 9em;
+  box-shadow: 0 0 28px rgba(232, 242, 122, 0.35);
+}
+
+button.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+button.ghost:hover { border-color: var(--glow); }
+button.danger { background: transparent; color: var(--danger); border-color: rgba(255, 138, 122, 0.5); }
+button:disabled { opacity: 0.45; cursor: default; }
+
+.note { color: var(--mute); font-size: 0.82rem; margin: 14px 0 0; text-align: center; }
+#announce-opts .note { text-align: left; }
+
+.run { text-align: center; padding: 10px 0 30px; }
+.run[hidden] { display: none; }
+
+.phase { margin: 0; color: var(--glow); font-size: 1.05rem; letter-spacing: 0.08em; min-height: 1.7em; }
+
+.remain {
+  margin: 4px 0;
+  font-size: clamp(4.2rem, 22vw, 8.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 calc(10px + 40px * var(--p)) rgba(232, 242, 122, calc(0.15 + 0.5 * var(--p)));
+}
+
+.remain.small { font-size: 3rem; }
+
+.endat { margin: 0 0 22px; color: var(--mute); }
+
+.meter {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+#meter-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6f7a3a, var(--glow));
+  transition: width 0.3s linear;
+}
+
+.volnote { color: var(--mute); font-size: 0.85rem; margin: 6px 0 26px; min-height: 1.5em; }
+
+footer {
+  position: relative;
+  z-index: 1;
+  color: var(--mute);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 24px 0 28px;
+  max-width: 560px;
+}
+
+/* 蛍。終わりに近いほど明るく、多くなる */
+.fireflies { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+
+.fly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 0 10px 3px rgba(232, 242, 122, 0.6);
+  opacity: 0;
+  animation: drift var(--dur) ease-in-out infinite alternate, blink var(--blink) ease-in-out infinite;
+  animation-delay: var(--delay), var(--delay);
+}
+
+.fly.on { --max: calc(0.25 + 0.75 * var(--p)); }
+.fly:not(.on) { --max: 0; }
+
+@keyframes drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(var(--dx), var(--dy)); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: var(--max, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fly { animation: blink 4s ease-in-out infinite; }
+}
